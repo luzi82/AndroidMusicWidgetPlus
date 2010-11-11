@@ -29,6 +29,14 @@ public class Const {
 				R.layout.donut_album_appwidget,
 				R.drawable.donut_appwidget_play,
 				R.drawable.donut_appwidget_pause);
+		addThemeEntry("DONUT_50", R.string.mwp_widgetname_donut_50,
+				R.layout.donut_50_album_appwidget,
+				R.drawable.donut_appwidget_play,
+				R.drawable.donut_appwidget_pause);
+		addThemeEntry("DONUT_00", R.string.mwp_widgetname_donut_00,
+				R.layout.donut_00_album_appwidget,
+				R.drawable.donut_appwidget_play,
+				R.drawable.donut_appwidget_pause);
 	}
 
 //	public static final String DEFAULT_KEY = "DONUT";

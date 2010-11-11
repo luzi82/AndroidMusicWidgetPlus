@@ -4,4 +4,6 @@
     <string name="mwp_widgetname_eclair_50">Eclair 50%</string>
     <string name="mwp_widgetname_eclair_00">Eclair 0%</string>
     <string name="mwp_widgetname_donut">Donut</string>
+    <string name="mwp_widgetname_donut_50">Donut 50%</string>
+    <string name="mwp_widgetname_donut_00">Donut 0%</string>
 </resources>
