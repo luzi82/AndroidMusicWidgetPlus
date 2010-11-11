@@ -80,10 +80,10 @@ public class MediaAppWidgetProvider extends AppWidgetProvider {
         final Resources res = context.getResources();
 
         for(int appWidgetId:appWidgetIds){
-        System.err.println("appWidgetId "+appWidgetId);
-        String key=MediaAppWidgetDatabase.loadTitlePref(context, appWidgetId);
+//        System.err.println("appWidgetId "+appWidgetId);
+        String key=MediaAppWidgetDatabase.getLayoutKey(context, appWidgetId);
         if(key!=null){
-        System.err.println("defaultAppWidget "+key);
+//        System.err.println("defaultAppWidget "+key);
         final RemoteViews views = new RemoteViews(contextPackageName, Const.mKeyToThemeEntry.get(key).layoutId);
         
         views.setViewVisibility(R.id.title, View.GONE);
@@ -150,10 +150,10 @@ public class MediaAppWidgetProvider extends AppWidgetProvider {
     	}
         
         for(int appWidgetId:appWidgetIds){
-    	System.err.println("appWidgetId "+appWidgetId);
-        String key=MediaAppWidgetDatabase.loadTitlePref(service, appWidgetId);
+//    	System.err.println("appWidgetId "+appWidgetId);
+        String key=MediaAppWidgetDatabase.getLayoutKey(service, appWidgetId);
         if(key!=null){
-        System.err.println("performUpdate "+key);
+//        System.err.println("performUpdate "+key);
         ThemeEntry themeEntry=Const.mKeyToThemeEntry.get(key);
         final RemoteViews views = new RemoteViews(servicePackageName, themeEntry.layoutId);
         
@@ -245,7 +245,7 @@ public class MediaAppWidgetProvider extends AppWidgetProvider {
         // When the user deletes the widget, delete the preference associated with it.
         final int N = appWidgetIds.length;
         for (int i=0; i<N; i++) {
-            MediaAppWidgetDatabase.deleteTitlePref(context, appWidgetIds[i]);
+            MediaAppWidgetDatabase.delLayoutKey(context, appWidgetIds[i]);
         }
     }
     

@@ -34,7 +34,7 @@ public class AddWidgetActivity extends Activity {
 			updateResult(FinishType.BAD);
 			mAppWidgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID,
 					AppWidgetManager.INVALID_APPWIDGET_ID);
-			System.err.println("onCreate " + mAppWidgetId);
+//			System.err.println("onCreate " + mAppWidgetId);
 
 			showDialog(0);
 		}
@@ -55,8 +55,8 @@ public class AddWidgetActivity extends Activity {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						String key = Const.mKeyList.get(which);
-						System.err.println("user select " + key);
-						MediaAppWidgetDatabase.saveTitlePref(
+//						System.err.println("user select " + key);
+						MediaAppWidgetDatabase.setLayoutKey(
 								AddWidgetActivity.this, mAppWidgetId, key);
 
 						Intent updateIntent = new Intent(
@@ -85,7 +85,7 @@ public class AddWidgetActivity extends Activity {
 		ab.setOnCancelListener(new OnCancelListener() {
 			@Override
 			public void onCancel(DialogInterface dialog) {
-				System.err.println("dialog onCancel");
+//				System.err.println("dialog onCancel");
 				AddWidgetActivity.this.finish();
 				// Intent resultValue = new Intent();
 				// resultValue.putExtra(
@@ -101,7 +101,7 @@ public class AddWidgetActivity extends Activity {
 
 	@Override
 	protected void onPause() {
-		System.err.println("AddWidgetActivity onPause");
+//		System.err.println("AddWidgetActivity onPause");
 		// if(!mIntentSent){
 		// System.err.println("AddWidgetActivity set result");
 		// mIntentSent=true;
@@ -124,7 +124,7 @@ public class AddWidgetActivity extends Activity {
 			awh.deleteAppWidgetId(mAppWidgetId);
 		}
 
-		System.err.println("is fin " + isFinishing());
+//		System.err.println("is fin " + isFinishing());
 		if (!isFinishing()) {
 			finish();
 		}
