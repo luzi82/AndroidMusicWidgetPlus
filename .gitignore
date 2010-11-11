@@ -1,0 +1,11 @@
+bin
+gen
+librandompixel.so
+out
+install.sh
+libs
+uninstall.sh
+res/values*/mwp_strings_loc.xml
+.~lock.i18n.ods#
+jni/version.h
+.i18n_timestamp

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mwp_widgetname_eclair">Eclair</string>
+    <string name="mwp_widgetname_eclair_50">Eclair 50%</string>
+    <string name="mwp_widgetname_eclair_00">Eclair 0%</string>
+    <string name="mwp_widgetname_donut">Donut</string>
+</resources>
