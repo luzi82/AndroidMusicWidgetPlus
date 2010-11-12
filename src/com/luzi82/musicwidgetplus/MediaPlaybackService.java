@@ -64,7 +64,7 @@ public class MediaPlaybackService extends Service {
 			d("MediaPlaybackService mIntentReceiver onReceive");
 			String action = intent.getAction();
 			String cmd = intent.getStringExtra("command");
-			if(SERVICECMDX.equals(action)){
+			if (SERVICECMDX.equals(action)) {
 				if (MediaAppWidgetProvider.CMDAPPWIDGETUPDATE.equals(cmd)) {
 					// Someone asked us to refresh a set of specific widgets,
 					// probably
@@ -74,9 +74,11 @@ public class MediaPlaybackService extends Service {
 					mAppWidgetProvider.performUpdate(MediaPlaybackService.this,
 							appWidgetIds);
 				}
-			}
-			else if(PLAYBACK_COMPLETE.equals(action)||META_CHANGED.equals(action)||PLAYSTATE_CHANGED.equals(action)){
-				mAppWidgetProvider.notifyChange(MediaPlaybackService.this, action);
+			} else if (PLAYBACK_COMPLETE.equals(action)
+					|| META_CHANGED.equals(action)
+					|| PLAYSTATE_CHANGED.equals(action)) {
+				mAppWidgetProvider.notifyChange(MediaPlaybackService.this,
+						action);
 			}
 		}
 	};
@@ -108,48 +110,48 @@ public class MediaPlaybackService extends Service {
 		super.onDestroy();
 	}
 
-//	@Override
-//	public int onStartCommand(Intent intent, int flags, int startId) {
-//		d("onStartCommand");
-//
-//		// mServiceStartId = startId;
-//		// mDelayedStopHandler.removeCallbacksAndMessages(null);
-//
-//		if (intent != null) {
-//			String action = intent.getAction();
-//			String cmd = intent.getStringExtra("command");
-//
-//			if (CMDNEXT.equals(cmd) || NEXT_ACTION.equals(action)) {
-//				next(true);
-//			} else if (CMDPREVIOUS.equals(cmd)
-//					|| PREVIOUS_ACTION.equals(action)) {
-//				if (position() < 2000) {
-//					prev();
-//				} else {
-//					seek(0);
-//					play();
-//				}
-//			} else if (CMDTOGGLEPAUSE.equals(cmd)
-//					|| TOGGLEPAUSE_ACTION.equals(action)) {
-//				if (isPlaying()) {
-//					pause();
-//				} else {
-//					play();
-//				}
-//			} else if (CMDPAUSE.equals(cmd) || PAUSE_ACTION.equals(action)) {
-//				pause();
-//			} else if (CMDSTOP.equals(cmd)) {
-//				pause();
-//				seek(0);
-//			}
-//		}
-//		// // make sure the service will shut down on its own if it was
-//		// // just started but not bound to and nothing is playing
-//		// mDelayedStopHandler.removeCallbacksAndMessages(null);
-//		// Message msg = mDelayedStopHandler.obtainMessage();
-//		// mDelayedStopHandler.sendMessageDelayed(msg, IDLE_DELAY);
-//		return START_STICKY;
-//	}
+	// @Override
+	// public int onStartCommand(Intent intent, int flags, int startId) {
+	// d("onStartCommand");
+	//
+	// // mServiceStartId = startId;
+	// // mDelayedStopHandler.removeCallbacksAndMessages(null);
+	//
+	// if (intent != null) {
+	// String action = intent.getAction();
+	// String cmd = intent.getStringExtra("command");
+	//
+	// if (CMDNEXT.equals(cmd) || NEXT_ACTION.equals(action)) {
+	// next(true);
+	// } else if (CMDPREVIOUS.equals(cmd)
+	// || PREVIOUS_ACTION.equals(action)) {
+	// if (position() < 2000) {
+	// prev();
+	// } else {
+	// seek(0);
+	// play();
+	// }
+	// } else if (CMDTOGGLEPAUSE.equals(cmd)
+	// || TOGGLEPAUSE_ACTION.equals(action)) {
+	// if (isPlaying()) {
+	// pause();
+	// } else {
+	// play();
+	// }
+	// } else if (CMDPAUSE.equals(cmd) || PAUSE_ACTION.equals(action)) {
+	// pause();
+	// } else if (CMDSTOP.equals(cmd)) {
+	// pause();
+	// seek(0);
+	// }
+	// }
+	// // // make sure the service will shut down on its own if it was
+	// // // just started but not bound to and nothing is playing
+	// // mDelayedStopHandler.removeCallbacksAndMessages(null);
+	// // Message msg = mDelayedStopHandler.obtainMessage();
+	// // mDelayedStopHandler.sendMessageDelayed(msg, IDLE_DELAY);
+	// return START_STICKY;
+	// }
 
 	@Override
 	public IBinder onBind(Intent arg0) {
@@ -160,6 +162,9 @@ public class MediaPlaybackService extends Service {
 		try {
 			if (mIsBound && (mBoundService != null)) {
 				return mBoundService.getTrackName();
+			} else if (mBoundTried && (!mIsBound)) {
+				return getResources().getString(
+						R.string.warning_nodefaultplayer);
 			}
 		} catch (RemoteException e) {
 		}
@@ -186,66 +191,67 @@ public class MediaPlaybackService extends Service {
 		return false;
 	}
 
-//	public void prev() {
-//		try {
-//			if (mIsBound && (mBoundService != null)) {
-//				mBoundService.prev();
-//			}
-//		} catch (RemoteException e) {
-//		}
-//	}
-//
-//	public void next(boolean force) {
-//		d("next");
-//		// force should be true
-//		try {
-//			if (mIsBound && (mBoundService != null)) {
-//				mBoundService.next();
-//			}
-//		} catch (RemoteException e) {
-//		}
-//	}
-//
-//	public void pause() {
-//		d("pause");
-//		try {
-//			if (mIsBound && (mBoundService != null)) {
-//				mBoundService.pause();
-//			}
-//		} catch (RemoteException e) {
-//		}
-//	}
-//
-//	public void play() {
-//		d("play");
-//		try {
-//			if (mIsBound && (mBoundService != null)) {
-//				mBoundService.play();
-//			}
-//		} catch (RemoteException e) {
-//		}
-//	}
-//
-//	public long seek(long pos) {
-//		try {
-//			if (mIsBound && (mBoundService != null)) {
-//				return mBoundService.seek(pos);
-//			}
-//		} catch (RemoteException e) {
-//		}
-//		return -1;
-//	}
-//
-//	public long position() {
-//		try {
-//			if (mIsBound && (mBoundService != null)) {
-//				return mBoundService.position();
-//			}
-//		} catch (RemoteException e) {
-//		}
-//		return -1;
-//	}
+	// public void prev() {
+	// try {
+	// if (mIsBound && (mBoundService != null)) {
+	// mBoundService.prev();
+	// }
+	// } catch (RemoteException e) {
+	// }
+	// }
+	//
+	// public void next(boolean force) {
+	// d("next");
+	// // force should be true
+	// try {
+	// if (mIsBound && (mBoundService != null)) {
+	// mBoundService.next();
+	// }
+	// } catch (RemoteException e) {
+	// }
+	// }
+	//
+	// public void pause() {
+	// d("pause");
+	// try {
+	// if (mIsBound && (mBoundService != null)) {
+	// mBoundService.pause();
+	// }
+	// } catch (RemoteException e) {
+	// }
+	// }
+	//
+	// public void play() {
+	// d("play");
+	// try {
+	// if (mIsBound && (mBoundService != null)) {
+	// mBoundService.play();
+	// }
+	// } catch (RemoteException e) {
+	// }
+	// }
+	//
+	// public long seek(long pos) {
+	// try {
+	// if (mIsBound && (mBoundService != null)) {
+	// return mBoundService.seek(pos);
+	// }
+	// } catch (RemoteException e) {
+	// }
+	// return -1;
+	// }
+	//
+	// public long position() {
+	// try {
+	// if (mIsBound && (mBoundService != null)) {
+	// return mBoundService.position();
+	// }
+	// } catch (RemoteException e) {
+	// }
+	// return -1;
+	// }
 
+	boolean mBoundTried = false;
 	boolean mIsBound = false;
 	private com.android.music.IMediaPlaybackService mBoundService = null;
 
@@ -254,7 +260,8 @@ public class MediaPlaybackService extends Service {
 			d("onServiceConnected");
 			mBoundService = com.android.music.IMediaPlaybackService.Stub
 					.asInterface(service);
-			mAppWidgetProvider.notifyChange(MediaPlaybackService.this, SERVICE_CONNECTED);
+			mAppWidgetProvider.notifyChange(MediaPlaybackService.this,
+					SERVICE_CONNECTED);
 		}
 
 		public void onServiceDisconnected(ComponentName className) {
@@ -264,12 +271,12 @@ public class MediaPlaybackService extends Service {
 	};
 
 	private void doBindService() {
+		mBoundTried = true;
 		Intent i = new Intent();
 		i.setClassName("com.android.music",
 				"com.android.music.MediaPlaybackService");
-//		startService(i);
-		bindService(i, mConnection, BIND_AUTO_CREATE);
-		mIsBound = true;
+		// startService(i);
+		mIsBound = bindService(i, mConnection, BIND_AUTO_CREATE);
 	}
 
 	private void doUnbindService() {
@@ -277,6 +284,7 @@ public class MediaPlaybackService extends Service {
 			unbindService(mConnection);
 			mIsBound = false;
 		}
+		mBoundTried = false;
 	}
 
 	static class ServiceStub extends IMediaPlaybackService.Stub {
