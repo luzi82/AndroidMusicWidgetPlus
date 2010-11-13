@@ -162,9 +162,6 @@ public class MediaPlaybackService extends Service {
 		try {
 			if (mIsBound && (mBoundService != null)) {
 				return mBoundService.getTrackName();
-			} else if (mBoundTried && (!mIsBound)) {
-				return getResources().getString(
-						R.string.warning_nodefaultplayer);
 			}
 		} catch (RemoteException e) {
 		}
@@ -189,6 +186,10 @@ public class MediaPlaybackService extends Service {
 		} catch (RemoteException e) {
 		}
 		return false;
+	}
+	
+	public int playerCompatible() {
+		return mPlayerCompatible;
 	}
 
 	// public void prev() {
@@ -251,7 +252,8 @@ public class MediaPlaybackService extends Service {
 	// return -1;
 	// }
 
-	boolean mBoundTried = false;
+//	boolean mBoundTried = false;
+	int mPlayerCompatible = 0; // 1 ok, 0 not test, -1 fail
 	boolean mIsBound = false;
 	private com.android.music.IMediaPlaybackService mBoundService = null;
 
@@ -271,12 +273,13 @@ public class MediaPlaybackService extends Service {
 	};
 
 	private void doBindService() {
-		mBoundTried = true;
+//		mBoundTried = true;
 		Intent i = new Intent();
 		i.setClassName("com.android.music",
 				"com.android.music.MediaPlaybackService");
 		// startService(i);
 		mIsBound = bindService(i, mConnection, BIND_AUTO_CREATE);
+		mPlayerCompatible = mIsBound?1:-1;
 	}
 
 	private void doUnbindService() {
@@ -284,7 +287,7 @@ public class MediaPlaybackService extends Service {
 			unbindService(mConnection);
 			mIsBound = false;
 		}
-		mBoundTried = false;
+//		mBoundTried = false;
 	}
 
 	static class ServiceStub extends IMediaPlaybackService.Stub {

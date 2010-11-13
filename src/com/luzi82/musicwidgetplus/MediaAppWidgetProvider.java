@@ -158,7 +158,9 @@ public class MediaAppWidgetProvider extends AppWidgetProvider {
         final RemoteViews views = new RemoteViews(servicePackageName, themeEntry.layoutId);
         
         // Format title string with track number, or show SD card message
-        if (status.equals(Environment.MEDIA_SHARED) ||
+        if (service.playerCompatible()==-1){
+            errorState = res.getText(R.string.warning_nodefaultplayer);
+        } else if (status.equals(Environment.MEDIA_SHARED) ||
                 status.equals(Environment.MEDIA_UNMOUNTED)) {
             errorState = res.getText(R.string.sdcard_busy_title);
         } else if (status.equals(Environment.MEDIA_REMOVED)) {
